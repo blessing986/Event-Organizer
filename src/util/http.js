@@ -1,3 +1,7 @@
+import { QueryClient } from "@tanstack/react-query";
+
+export const queryClient = new QueryClient();
+
 export async function fetchEvents({ signal, searchTerm }) {
   let url = "http://localhost:3000/events";
 
@@ -20,15 +24,15 @@ export async function fetchEvents({ signal, searchTerm }) {
 
 export async function createNewEvent(eventData) {
   const response = await fetch(`http://localhost:3000/events`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(eventData),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
   if (!response.ok) {
-    const error = new Error('An error occurred while creating the event');
+    const error = new Error("An error occurred while creating the event");
     error.code = response.status;
     error.info = await response.json();
     throw error;
@@ -40,10 +44,12 @@ export async function createNewEvent(eventData) {
 }
 
 export async function fetchSelectableImages({ signal }) {
-  const response = await fetch(`http://localhost:3000/events/images`, { signal });
+  const response = await fetch(`http://localhost:3000/events/images`, {
+    signal,
+  });
 
   if (!response.ok) {
-    const error = new Error('An error occurred while fetching the images');
+    const error = new Error("An error occurred while fetching the images");
     error.code = response.status;
     error.info = await response.json();
     throw error;
